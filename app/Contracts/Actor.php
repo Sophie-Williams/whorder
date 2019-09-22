@@ -8,14 +8,14 @@ interface Actor
      * Converse
      * @return string
      */
-    public function converse();
+    public function talk();
 
     /**
-     * Should Use
+     * Should Talk
      * @param App\Models\Gamer $gamer
      * @param string $message
      * 
      * @return bool
      */
-    public static function shouldUse($gamer, $message);
+    public static function shouldTalk($gamer, $message);
 }

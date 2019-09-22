@@ -7,9 +7,9 @@ use App\Actors\Actor;
 class SaluteActor extends Actor
 {
     /**
-     * should use
+     * should talk
      */
-    public static function shouldUse($gamer, $message)
+    public static function shouldTalk($gamer, $message)
     {
         return $gamer->game == null;
     }
@@ -18,7 +18,7 @@ class SaluteActor extends Actor
      * Converse
      * @return string
      */
-    public function converse()
+    public function talk()
     {
         return "Hello";
     }

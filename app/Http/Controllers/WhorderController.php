@@ -15,7 +15,7 @@ class WhorderController extends Controller
     {
         $actor = ActorFactory::make();
 
-        return $this->makeResponse($actor->converse());
+        return $this->makeResponse($actor->talk());
     }
 
     /**
@@ -26,7 +26,7 @@ class WhorderController extends Controller
         $messageResponse = new MessagingResponse;
 
         $messageResponse->message($reply);
-        
+
         return response($messageResponse, 200)->header(
             'Content-Type', 'text/xml'
         );

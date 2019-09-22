@@ -14,9 +14,9 @@ class KeyWordActor extends Actor
     ];
 
     /**
-     * should use
+     * should talk
      */
-    public static function shouldUse($gamer, $message)
+    public static function shouldTalk($gamer, $message)
     {
         return in_array(trim(strtolower($message)), static::KEY_WORDS);
     }
@@ -25,7 +25,7 @@ class KeyWordActor extends Actor
      * Converse
      * @return string
      */
-    public function converse()
+    public function talk()
     {
         return "Hello";
     }

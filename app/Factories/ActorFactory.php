@@ -60,7 +60,7 @@ class ActorFactory
     {
         foreach ($this->getActors() as $actor) {
 
-            if ($actor::shouldUse($gamer, $message)) 
+            if ($actor::shouldTalk($gamer, $message)) 
                 return new $actor($gamer,$message);
         }
         return new \App\Actors\SaluteActor($gamer, $message);
