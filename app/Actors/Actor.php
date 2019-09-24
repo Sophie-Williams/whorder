@@ -21,4 +21,23 @@ abstract class Actor implements ActorContract
         $this->gamer = $gamer;
         $this->message = $message;
     }
+
+    /**
+     * Call Actor from within an actor
+     * @param string $actor
+     * @return string $convo
+     */
+    protected function call($actor)
+    {
+        $actor = new $actor($this->gamer, $this->message);
+        return $actor->talk();
+    }
+
+    /**
+     * Save actor
+     */
+    public function talk()
+    {
+        $this->gamer->save();
+    }
 }

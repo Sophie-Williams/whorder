@@ -13,16 +13,8 @@ class Game extends Model
      * @var array
      */
     protected $fillable = [
-        'gamer_id', 'question', 'missings',
+        'gamer_id', 'question', 'answer',
         'is_answered', 'points', 'attempts'
-    ];
-
-    /**
-     * Cast Attributes
-     */
-    protected $casts = [
-        'question' => 'array',
-        'missings' => 'array'
     ];
 
     /**

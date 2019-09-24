@@ -17,7 +17,7 @@ class CreateGamesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('gamer_id');
             $table->longText('question');
-            $table->longText('missings');
+            $table->longText('answer');
             $table->boolean('is_answered')->default(false);
             $table->integer('points')->default(0);
             $table->integer('attempts')->default(0);

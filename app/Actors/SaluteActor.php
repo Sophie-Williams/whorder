@@ -3,6 +3,8 @@
 namespace App\Actors;
 
 use App\Actors\Actor;
+use App\Constants\Keywords;
+use App\Constants\Conversations;
 
 class SaluteActor extends Actor
 {
@@ -20,6 +22,53 @@ class SaluteActor extends Actor
      */
     public function talk()
     {
-        return "Hello";
+        parent::talk();
+        
+        $conversation = Conversations::SALUTE;
+
+        foreach ($this->buildConvo() as $key => $value) {
+            $conversation = str_replace($key, $value, $conversation);
+        }
+        return $conversation;
+    }
+
+    /**
+     * Build Conversation
+     */
+    protected function buildConvo()
+    {
+        $name_key = $this->gamer->first_name ?? "there";
+        $extra_greet_key = $this->addExtraGreeting();
+        $start_key = Keywords::START;
+        $rule_key = Keywords::RULE;
+        $game_key = config("app.name");
+
+        return compact(
+            'name_key', 
+            'extra_greet_key', 
+            'start_key', 
+            'rule_key', 
+            'game_key'
+        );
+    }
+
+    /**
+     * Add Extra Greeting
+     */
+    protected function addExtraGreeting()
+    {
+        $extraGreeting = "";
+        if ($this->gamer->attempts < 1) {
+            $extraGreeting .= "Welcome. So you think you're smart right? How good is your vocabulary?";
+        } elseif ($this->gamer->attempts > 1 && $this->gamer->points < 10) {
+            $extraGreeting .= "Nice to see you again. 
+            You didn't do well the last time. You are in the bottom ".rand(10, 100)." players 
+            with just {$this->gamer->points} points. Try beating your last score";
+        } else {
+            $extraGreeting .= "Nice to see you again. 
+            You are smashing it. You're in the top ".rand(10, 100)." players with {$this->gamer->points} points.
+            Try beating your last score";
+        }
+        return $extraGreeting;
     }
 }

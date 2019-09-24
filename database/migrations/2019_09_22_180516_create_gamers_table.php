@@ -20,6 +20,7 @@ class CreateGamersTable extends Migration
             $table->string('phone_number')->unique();
             $table->string('points')->default(0);
             $table->string('attempts')->default(0);
+            $table->string('actor')->nullable();
             $table->timestamps();
         });
     }
