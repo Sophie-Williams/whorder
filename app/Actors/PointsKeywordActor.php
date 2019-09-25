@@ -25,7 +25,7 @@ class PointsKeywordActor extends Actor
     {
         parent::talk();
 
-        $conversation = Conversations::RULES;
+        $conversation = Conversations::POINTS;
 
         foreach ($this->buildConvo() as $key => $value) {
             $conversation = str_replace($key, $value, $conversation);
@@ -38,20 +38,10 @@ class PointsKeywordActor extends Actor
      */
     protected function buildConvo()
     {
-        $start_key = Keywords::START;
-        $rule_key = Keywords::RULE;
-        $skip_key = Keywords::SKIP;
-        $stop_key = Keywords::STOP;
-        $pnts_key = Keywords::POINTS;
-        $points_key = config("whorder.points");
+        $points_key = $this->gamer->game == null 
+                ? $this->gamer->points 
+                : $this->gamer->game->points;
 
-        return compact(
-            'start_key', 
-            'rule_key', 
-            'points_key',
-            'skip_key',
-            'stop_key',
-            'pnts_key'
-        );
+        return compact('points_key');
     }
 }

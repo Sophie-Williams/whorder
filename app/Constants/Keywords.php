@@ -9,4 +9,5 @@ class Keywords
     const RULE = "rule";
     const POINTS = "pnts";
     const SKIP = "skip";
+    const SAVE = "save";
 }

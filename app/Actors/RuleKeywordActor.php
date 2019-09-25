@@ -43,6 +43,7 @@ class RuleKeywordActor extends Actor
         $skip_key = Keywords::SKIP;
         $stop_key = Keywords::STOP;
         $pnts_key = Keywords::POINTS;
+        // $save_key = Keywords::SAVE;
         $points_key = config("whorder.points");
 
         return compact(
@@ -51,7 +52,8 @@ class RuleKeywordActor extends Actor
             'points_key',
             'skip_key',
             'stop_key',
-            'pnts_key'
+            'pnts_key',
+            // 'save_key'
         );
     }
 }
