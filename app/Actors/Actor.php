@@ -38,6 +38,7 @@ abstract class Actor implements ActorContract
      */
     public function talk()
     {
-        $this->gamer->save();
+        if ($this->gamer->phone_number)
+            $this->gamer->save();
     }
 }
