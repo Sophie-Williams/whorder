@@ -6,7 +6,7 @@ class QuestionFactory
 {
     protected $words;
 
-    const MAX_WORDS = 264000;
+    const MAX_WORDS = 107551;
 
     /**
      * construct
