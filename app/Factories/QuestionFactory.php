@@ -68,7 +68,10 @@ class QuestionFactory
      */
     public function generate()
     {
-        $answerable = $this->spitWords(1);
+        do {
+            $answerable = $this->spitWords(1);
+        } while (strlen($answerable) > 4 || $this->endsWith($answerable, "s"));
+
         $lengthOfCharactersToRemoveFromQuestions = strlen($answerable);
         $questions = $this->spitWords($lengthOfCharactersToRemoveFromQuestions);
 
@@ -80,6 +83,17 @@ class QuestionFactory
         }
 
         return compact('stripedQuestion', 'answerable');
+    }
+
+    /**
+     * Determine if a string ends with value
+     */
+    protected function endsWith($haystack, $needle)
+    {
+        if (($length = strlen($needle)) == 0) {
+            return true;
+        }
+        return (substr($haystack, -$length) === $needle);
     }
 
     /**
