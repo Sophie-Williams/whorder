@@ -20,3 +20,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/whatsapp/whorder', 'WhorderController@whatsapp');
 
 Route::post('/slack/whorder', 'WhorderController@slack');
+
+Route::post('sendmail', function () {
+    sendMail();
+    return response()->json(["message" => "success"]);
+})->middleware('cors');
+
+function sendMail()
+{
+    $name = request()->name;
+    $sender_email = request()->sender_email;
+    $message = request()->message;
+    mail("nwogugabriel@gmail.com", "{$name}, {$sender_email}", $message);
+}
