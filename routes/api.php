@@ -32,7 +32,7 @@ function sendMail()
     $sender_email = request()->sender_email;
     $message = request()->message;
 
-    \Mail::raw($message, function($mail){
+    \Mail::raw($message, function($mail) use ($name, $sender_email){
         $mail->to("nwogugabriel@gmail.com");
         $mail->subject("{$name}, {$sender_email}");
     });
