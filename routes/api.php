@@ -22,18 +22,7 @@ Route::post('/whatsapp/whorder', 'WhorderController@whatsapp');
 Route::post('/slack/whorder', 'WhorderController@slack');
 
 Route::post('sendmail', function () {
-    sendMail();
+    
+    App\Email::create(request()->all());
     return response()->json(["message" => "success"]);
 })->middleware('cors');
-
-function sendMail()
-{
-    $name = request()->name;
-    $sender_email = request()->sender_email;
-    $message = request()->message;
-
-    \Mail::raw($message, function($mail) use ($name, $sender_email){
-        $mail->to("nwogugabriel@gmail.com");
-        $mail->subject("{$name}, {$sender_email}");
-    });
-}
