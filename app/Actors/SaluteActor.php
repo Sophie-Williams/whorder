@@ -58,9 +58,9 @@ class SaluteActor extends Actor
     protected function addExtraGreeting()
     {
         $extraGreeting = "";
-        if ($this->gamer->attempts < 1) {
+        if ($this->gamer->rounds < 1) {
             $extraGreeting .= "Welcome. So you think you're smart right? How good is your vocabulary?";
-        } elseif ($this->gamer->attempts > 1 && $this->gamer->points < 10) {
+        } elseif ($this->gamer->rounds > 1 && $this->gamer->points < 7) {
             $extraGreeting .= "Nice to see you again. 
             You didn't do well the last time. You are in the bottom ".rand(10, 100)." players 
             with just {$this->gamer->points} points. Try beating your last score";
