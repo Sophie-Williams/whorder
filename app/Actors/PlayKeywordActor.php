@@ -25,6 +25,10 @@ class PlayKeywordActor extends Actor
     {
         parent::talk();
 
+        if ($this->gamer->first_name == null) {
+            return $this->processName();
+        }
+
         return $this->processConvo(QuestionFactory::make()->generate());
     }
 
@@ -35,11 +39,20 @@ class PlayKeywordActor extends Actor
     {
         $question = join("\n", $questionAnswer["stripedQuestion"]);
 
-        $this->gamer->game()->updateOrCreate(['is_answered' => false],[
+        $this->gamer->game()->updateOrCreate(['gamer_id' => $this->gamer->id],[
             "question" => $question,
-            "answer" => $questionAnswer["answerable"]
+            "answer" => $questionAnswer["answerable"],
+            "missed_count" => 0
         ]);
+        $questionNumber = ($this->gamer->game->question_attempts ?? 0) + 1;
+        return "\nQuestion {$questionNumber}:\n" . $question;
+    }
 
-        return $question;
+    /**
+     * Process Name
+     */
+    private function processName()
+    {
+        return $this->call(NameKeywordActor::class, static::class);
     }
 }

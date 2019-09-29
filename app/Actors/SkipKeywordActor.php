@@ -3,11 +3,13 @@
 namespace App\Actors;
 
 use App\Actors\Actor;
-use App\Constants\Conversations;
+use App\Traits\ActorTrait;
 use App\Constants\Keywords;
+use App\Constants\Conversations;
 
 class SkipKeywordActor extends Actor
 {
+    use ActorTrait;
 
     /**
      * should talk
@@ -27,6 +29,6 @@ class SkipKeywordActor extends Actor
 
         $conversation = Conversations::SKIP;
 
-        return $conversation . "\n" . $this->call(PlayKeywordActor::class);
+        return $conversation . "\n" . $this->nextQuestion();
     }
 }

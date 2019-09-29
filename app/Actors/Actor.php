@@ -25,12 +25,13 @@ abstract class Actor implements ActorContract
     /**
      * Call Actor from within an actor
      * @param string $actor
+     * @param mixed $data
      * @return string $convo
      */
-    protected function call($actor)
+    protected function call($actor, $data = null)
     {
         $actor = new $actor($this->gamer, $this->message);
-        return $actor->talk();
+        return $actor->talk($data);
     }
 
     /**

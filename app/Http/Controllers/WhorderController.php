@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gamer;
+use App\Constants\Keywords;
 use Illuminate\Http\Request;
-use App\Factories\WhatsappActorFactory;
-use App\Factories\SlackActorFactory;
+use App\Actors\StopKeywordActor;
 use Twilio\TwiML\MessagingResponse;
+use App\Factories\SlackActorFactory;
+use App\Factories\WhatsappActorFactory;
 
 class WhorderController extends Controller
 {
@@ -38,6 +41,19 @@ class WhorderController extends Controller
         $actor = SlackActorFactory::make();
 
         return $this->makeResponse($actor->talk());
+    }
+
+    /**
+     * Stop all Games
+     */
+    public function stopAllGames()
+    {
+        $data = Gamer::whereHas("game")->get()->map(function($gamer) {
+            $stopActor = new StopKeywordActor($gamer, Keywords::STOP);
+            return $stopActor->talk();
+        });
+
+        return response()->json(["message" => "all games stopped successfully", "data" => $data]);
     }
 
     /**

@@ -3,9 +3,12 @@
 namespace App\Actors;
 
 use App\Actors\Actor;
+use App\Traits\ActorTrait;
 
 class GameActor extends Actor
 {
+    use ActorTrait;
+    
     protected $successMessages = [
         "You’re the most brilliant person I know. Well done.",
         "Good one mate. Bravo",
@@ -64,9 +67,8 @@ class GameActor extends Actor
     protected function correctAnswerActivity()
     {
         $this->givePoints();
-        $points = config("whorder.points");
         return $this->successMessages[rand(0, count($this->successMessages) - 1)]
-                . " You've earned {$points} points" . "\n\n" . $this->call(PlayKeyWordActor::class);
+                . " You're on {$this->gamer->game->points} points" . "\n\n" . $this->nextQuestion();
     }
 
     /**
@@ -84,6 +86,17 @@ class GameActor extends Actor
      */
     protected function wrongAnswerActivity()
     {
-        return $this->failureMessages[rand(0, count($this->failureMessages) - 1)];
+        $missedCount = $this->gamer->game->missed_count + 1;
+
+        if ($missedCount >= config("whorder.missed_count")) {
+            $convo = $this->failureMessages[rand(0, count($this->failureMessages) - 1)]
+            . "\n\n" . $this->nextQuestion();  
+        } else {
+            $convo = $this->failureMessages[rand(0, count($this->failureMessages) - 1)];
+            $this->gamer->game->missed_count = $missedCount;
+        }
+        $this->gamer->push();
+
+        return $convo;
     }
 }

@@ -16,7 +16,7 @@ class Gamer extends Authenticatable
      */
     protected $fillable = [
         'first_name', 'last_name', 'phone_number',
-        'points', 'attempts'
+        'points', 'rounds'
     ];
 
     /**
@@ -25,5 +25,13 @@ class Gamer extends Authenticatable
     public function game()
     {
         return $this->hasOne(Game::class);
+    }
+
+    /**
+     * Gamer's Conversation
+     */
+    public function conversation()
+    {
+        return $this->hasOne(Conversation::class);
     }
 }

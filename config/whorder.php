@@ -10,6 +10,8 @@ return [
      */
     "actors" => [
         App\Actors\RuleKeywordActor::class,
+        App\Actors\NameKeywordActor::class,
+        App\Actors\NameActor::class,
         App\Actors\PointsKeywordActor::class,
         App\Actors\SkipKeywordActor::class,
         App\Actors\StopKeywordActor::class,
@@ -21,5 +23,15 @@ return [
     /**
      * Correct points to award for each correct question
      */
-    "points" => 3
+    "points" => 3,
+
+    /**
+     * Questions per round
+     */
+    "round" => 7,
+
+    /**
+     * Allowed Misses per question
+     */
+    "missed_count" => 3,
 ];

@@ -33,14 +33,14 @@ class StopKeywordActor extends Actor
      */
     protected function saveGame()
     {
-        $currentAttempts = $this->gamer->attempts;
+        $currentRound = $this->gamer->rounds;
         $currentPoints = $this->gamer->points;
 
         $gamePoints = $this->gamer->game->points;
         $gameAttempts = $this->gamer->game->attempts;
 
-        $this->gamer->attempts = $currentAttempts + $gameAttempts;
         $this->gamer->points = $currentPoints + $gamePoints;
+        $this->gamer->rounds = $currentRound + 1;
 
         $this->gamer->save();
         $this->gamer->game()->delete();
@@ -53,17 +53,19 @@ class StopKeywordActor extends Actor
      */
     protected function buildConvo($gamePoints, $gameAttempts)
     {
-        if ($gamePoints > 10 && $gamePoints < 50) {
-            $convo = "Well done! You played well. You got a total of $gamePoints points,
-                    with $gameAttempts attempts. It's not too late for English lessons!";
-        } elseif ($gamePoints > 50) {
-            $convo = "Brilliant Performance! You played well. You got a total of $gamePoints points,
-                    with $gameAttempts attempts. You're a legend!";
+        $convo = "Game Over! ";
+        if ($gamePoints > 7 && $gamePoints < 15) {
+            $convo .= "Well done {$this->gamer->first_name}! You played well. You got a total of $gamePoints points,
+                    with $gameAttempts correct attempts. It's not too late for English lessons!";
+        } elseif ($gamePoints > 15) {
+            $convo .= "Brilliant Performance {$this->gamer->first_name}! You played well. You got a total of $gamePoints points,
+                    with $gameAttempts correct attempts. You're a legend!";
         } else {
-            $convo = "Poor Performance! Your English teacher would be dissapointed. 
-                    You got a total of $gamePoints points, with $gameAttempts attempts. English Olodo!";
+            $convo .= "Poor Performance {$this->gamer->first_name}! Your English teacher would be disappointed. 
+                    You got a total of $gamePoints points, with $gameAttempts correct attempts. English Olodo!";
         }
-        return $convo;
+        $start = Keywords::START;
+        return $convo . "\n Say *{$start}*, to start another round";
     }
 
 

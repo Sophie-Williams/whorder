@@ -2,6 +2,8 @@
 
 namespace App\Factories;
 
+use App\Constants\Keywords;
+
 class QuestionFactory
 {
     protected $words;
@@ -70,7 +72,7 @@ class QuestionFactory
     {
         do {
             $answerable = $this->spitWords(1);
-        } while (strlen($answerable) > 4 || $this->endsWith($answerable, "s"));
+        } while ($this->invalidAnswer($answerable));
 
         $lengthOfCharactersToRemoveFromQuestions = strlen($answerable);
         $questions = $this->spitWords($lengthOfCharactersToRemoveFromQuestions);
@@ -109,6 +111,46 @@ class QuestionFactory
                 return $this->stripCharFromQuestion($this->spitWords(1), $answer, $index);
             }
         return substr_replace($question, "_", $removeFromQuestion, 1);
+    }
+
+    /**
+     * Checks if answer fails any condition and regenerate new answer
+     * @param string $answer
+     * @return bool
+     */
+    protected function invalidAnswer($answerable)
+    {
+        if ( strlen($answerable) < 6)
+            return $this->suspectsPlural($answerable);
+        return true;
+    }
+
+    /**
+     * Suspects plural
+     */
+    protected function suspectsPlural($answerable)
+    {
+        if (! $this->endsWith($answerable, "s"))
+            return $this->isKeyWord($answerable);
+        return true;
+    }
+
+    /**
+     * Is Keyword
+     */
+    protected function isKeyWord($answerable)
+    {
+        return in_array($answerable, $this->keywords());
+    }
+
+    /**
+     * Get Key Words
+     * @return array
+     */
+    protected function keywords()
+    {
+        $keywordClass = new \ReflectionClass(Keywords::class);
+        return array_values($keywordClass->getConstants());
     }
 
 

@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/whatsapp/whorder', 'WhorderController@whatsapp');
 
+Route::get('/whatsapp/whorder/stop-all-games', 'WhorderController@stopAllGames');
+
 Route::post('/slack/whorder', 'WhorderController@slack');
 
 Route::post('sendmail', function () {
